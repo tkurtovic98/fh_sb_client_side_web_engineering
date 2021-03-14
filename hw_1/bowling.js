@@ -16,11 +16,11 @@ const normalScore = (gameFrame) => {
     return score;
 }
 
-const spareScore = (gameFrames, gameFrame) => {
+const spareScore = (gameFrame) => {
     let score = STRIKE_VALUE
 
     if (gameFrame === STRIKE) {
-        score += multipleStrikesScore(gameFrames, gameFrame)
+        score += STRIKE_VALUE
     } else {
         score += normalScore(gameFrame[0])
     }
@@ -30,12 +30,14 @@ const spareScore = (gameFrames, gameFrame) => {
 
 const strikeScore = (gameFrames, gameFrameIndex) => {
 
-    if (gameFrameIndex + 1 >= 12) {
+    const maxFrames = gameFrames.length
+
+    if(gameFrameIndex + 1 === maxFrames){
         return 0;
     }
 
     const gameFrame = cleanUpGameFrame(gameFrames[gameFrameIndex]);
-    score = STRIKE_VALUE;
+    let score = STRIKE_VALUE;
 
     if (gameFrame === STRIKE) {
         score += STRIKE_VALUE
@@ -48,7 +50,11 @@ const strikeScore = (gameFrames, gameFrameIndex) => {
         }
 
     } else {
-        score += normalScore(gameFrame)
+        if(gameFrame.includes(SPARE)){
+            score+= STRIKE_VALUE;
+        } else {
+            score += normalScore(gameFrame)
+        }
     }
 
     return score
@@ -60,35 +66,90 @@ const SPARE = '/'
 const STRIKE_VALUE = 10
 const MAX_FRAMES_PER_GAME = 10
 
-const isLastFrame = (gameFrame) => {
-    return gameFrame.split('').length > 2
+const isLastFrame = (gameFrameIndex) => {
+    return gameFrameIndex + 1 === MAX_FRAMES_PER_GAME
+}
+
+const lastFrameType = (lastFrame) => {
+
+    if(lastFrame === STRIKE) {
+        return STRIKE;
+    }
+
+    if(lastFrame.includes(SPARE)){
+        return SPARE
+    }
+
+    return 'NUM'
+
+}
+
+const lastFrameScore = (lastFrame) => {
+    let score = 0;
+
+    const frameType = lastFrameType(lastFrame[0])
+
+    if(frameType === STRIKE) {
+
+        if(lastFrame[1] !== STRIKE && lastFrame[2] !== STRIKE) {
+            score += STRIKE_VALUE
+            lastFrame.slice(1).forEach(gameFrame => {
+                score += normalScore(gameFrame)
+            })
+        } else {
+            score += strikeScore(lastFrame, 0)
+        }
+
+    }
+
+    if(frameType === SPARE){
+        score += spareScore(cleanUpGameFrame(lastFrame[1]))
+    }
+
+    if(frameType !== STRIKE && frameType !== SPARE) {
+        score += normalScore(cleanUpGameFrame(lastFrame[0]))
+    }
+
+    return score;
 }
 
 const gameResult = (game) => {
     const gameFrames = game.trim().split(" ")
     var score = 0;
     var lastFrame = '';
-    gameFrames.forEach((gameFrame, gameFrameIndex) => {
 
-        gameFrame = cleanUpGameFrame(gameFrame)
+    let gameFrameIndex = 0;
+
+    while(true) {
+
+        var gameFrame = cleanUpGameFrame(gameFrames[gameFrameIndex])
+
+        if(isLastFrame(gameFrameIndex)) {
+
+            if (lastFrame === STRIKE) {
+                score += strikeScore(gameFrames, gameFrameIndex)
+            }
+
+            if (lastFrame === SPARE) {
+                score += spareScore(gameFrame)
+            }
+
+            score += lastFrameScore(gameFrames.slice(gameFrameIndex))
+            break;
+        }
         
         if (lastFrame === STRIKE) {
             score += strikeScore(gameFrames, gameFrameIndex)
         }
 
         if (lastFrame === SPARE) {
-            score += spareScore(gameFrames, gameFrame)
+            score += spareScore(gameFrame)
         }
 
         if (gameFrame.includes(SPARE)) {
-            
-            if(isLastFrame(gameFrame)){
-                score += STRIKE_VALUE
-                score += normalScore(gameFrame.substr(2))
-            }
-
             lastFrame = SPARE
-            return
+            gameFrameIndex++
+            continue;
         }
 
         if (gameFrame !== STRIKE && gameFrame !== SPARE) {
@@ -96,12 +157,15 @@ const gameResult = (game) => {
         }
 
         lastFrame = gameFrame;
-    })
-
+        gameFrameIndex++;
+    }
     return score
 }
 
 module.exports = {
     frameResultAfterTwoRolls,
-    gameResult
+    gameResult,
+    spareScore,
+    strikeScore,
+    lastFrameScore
 }

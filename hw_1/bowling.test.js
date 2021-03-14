@@ -4,14 +4,14 @@ const bowling = require('./bowling');
 
 const sequenceWithMinusFromOneTo = (upperLimit) => {
     let sequence = ''
-    for(let i = 1; i < upperLimit + 1; i++){
+    for (let i = 1; i < upperLimit + 1; i++) {
         sequence += `${i}- `
     }
     return sequence;
 }
 
 it('When given 1 and 9 return 10', () => {
-    const result =bowling.frameResultAfterTwoRolls('19');
+    const result = bowling.frameResultAfterTwoRolls('19');
     expect(result).toEqual(10);
 })
 
@@ -85,7 +85,33 @@ it('When given 12 5/ 34 5/ 11 11 11 11 11 11 11 11 return 46', () => {
 
 
 it('When given 5/ 5/ 5/ 5/ 5/ 5/ 5/ 5/ 5/ 5/ 5 return 150', () => {
-    const bowlingGame = "5/ 5/ 5/ 5/ 5/ 5/ 5/ 5/ 5/ 5/5";
+    const bowlingGame = "5/ 5/ 5/ 5/ 5/ 5/ 5/ 5/ 5/ 5/ 5";
     const result = bowling.gameResult(bowlingGame);
     expect(result).toEqual(150);
 })
+
+
+it('When given 1- 2- 3- 4- 5- 6- X X 5/ X 5 5 return 106', () => {
+    const bowlingGame = "1- 2- 3- 4- 5- 6- X X 5/ X 5 5";
+    const result = bowling.gameResult(bowlingGame);
+    expect(result).toEqual(106);
+})
+
+it('When given 5/ 5 return 15', () => {
+    const gameFrames = ["5/", "5"];
+    const result = bowling.spareScore(gameFrames[1] )
+    expect(result).toEqual(15);
+})
+
+it('When given X X X return 30', () => {
+    const gameFrames = ["X", "X", "X"];
+    const result = bowling.strikeScore(gameFrames, 1 )
+    expect(result).toEqual(30);
+})
+
+it('When given X X X return 30', () => {
+    const gameFrames = ["X", "X", "X"];
+    const result = bowling.lastFrameScore(gameFrames, 1 )
+    expect(result).toEqual(30);
+})
+
