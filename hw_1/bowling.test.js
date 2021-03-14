@@ -30,6 +30,11 @@ it('When given 5/ 2- 2- 2- 2- 2- 2- 2- 2- 2- return 30', () => {
     expect(result).toEqual(30);
 })
 
+it('When given X 1- 2- 3- 4- 5- 6- 7- 8- 9- return 56', () => {
+    const result = bowling.gameResult('X ' + sequenceWithMinusFromOneTo(9));
+    expect(result).toEqual(56);
+})
+
 it('When given X X 1- 2- 3- 4- 5- 6- 7- 8- return 68', () => {
     const bowlingGame = 'X '.repeat(2) + sequenceWithMinusFromOneTo(8);
     const result = bowling.gameResult(bowlingGame);
@@ -42,9 +47,20 @@ it('When given 5/ 5/ 1- 2- 3- 4- 5- 6- 7- 8- return 67', () => {
     expect(result).toEqual(62);
 })
 
-it('When given X X X 1- 2- 3- 4- 5- 6- 7- return 91', () => {
+it('When given X X X 1- 2- 3- 4- 5- 6- 7- return 90', () => {
     const bowlingGame = 'X '.repeat(3) + sequenceWithMinusFromOneTo(7);
     const result = bowling.gameResult(bowlingGame);
-    expect(result).toEqual(91);
+    expect(result).toEqual(90);
 })
 
+it('When given X X X X 1- 2- 3- 4- 5- 6- return 113', () => {
+    const bowlingGame = 'X '.repeat(4) + sequenceWithMinusFromOneTo(6);
+    const result = bowling.gameResult(bowlingGame);
+    expect(result).toEqual(113);
+})
+
+it('When given X X X X X X X X X X X X return 300', () => {
+    const bowlingGame = 'X '.repeat(12);
+    const result = bowling.gameResult(bowlingGame);
+    expect(result).toEqual(300);
+})

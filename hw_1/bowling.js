@@ -29,11 +29,24 @@ const spareScore = (gameFrames, gameFrame) => {
 }
 
 const strikeScore = (gameFrames, gameFrameIndex) => {
+
+    if (gameFrameIndex + 1 >= 12) {
+        return 0;
+    }
+
     const gameFrame = cleanUpGameFrame(gameFrames[gameFrameIndex]);
     score = STRIKE_VALUE;
 
     if (gameFrame === STRIKE) {
-        score += strikeScore(gameFrames, gameFrameIndex + 1)
+        score += STRIKE_VALUE
+        let nextGameFrame = gameFrames[gameFrameIndex + 1]
+
+        if (nextGameFrame === STRIKE) {
+            score += STRIKE_VALUE
+        } else {
+            score += normalScore(nextGameFrame[0])
+        }
+
     } else {
         score += normalScore(gameFrame)
     }
@@ -45,6 +58,8 @@ const STRIKE = 'X'
 const SPARE = '/'
 
 const STRIKE_VALUE = 10
+const MAX_FRAMES_PER_GAME = 10
+
 
 const gameResult = (game) => {
     const gameFrames = game.trim().split(" ")
