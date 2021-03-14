@@ -64,3 +64,9 @@ it('When given X X X X X X X X X X X X return 300', () => {
     const result = bowling.gameResult(bowlingGame);
     expect(result).toEqual(300);
 })
+
+it('When given 12 X 34 X 11 11 11 11 11 11 11 11 return 51', () => {
+    const bowlingGame = "12 X 34 X 11 11 11 11 11 11";
+    const result = bowling.gameResult(bowlingGame);
+    expect(result).toEqual(51);
+})

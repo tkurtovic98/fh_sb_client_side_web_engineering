@@ -10,7 +10,8 @@ const cleanUpGameFrame = (gameFrame) => {
 
 const normalScore = (gameFrame) => {
     let score = 0
-    gameFrame.split().forEach((roll) => {
+    console.log(gameFrame)
+    gameFrame.split('').forEach((roll) => {
         score += parseInt(roll);
     })
     return score;
@@ -68,7 +69,7 @@ const gameResult = (game) => {
     gameFrames.forEach((gameFrame, gameFrameIndex) => {
 
         gameFrame = cleanUpGameFrame(gameFrame)
-
+        
         if (lastFrame === STRIKE) {
             score += strikeScore(gameFrames, gameFrameIndex)
         }
