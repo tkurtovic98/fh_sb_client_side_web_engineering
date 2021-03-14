@@ -10,7 +10,6 @@ const cleanUpGameFrame = (gameFrame) => {
 
 const normalScore = (gameFrame) => {
     let score = 0
-    console.log(gameFrame)
     gameFrame.split('').forEach((roll) => {
         score += parseInt(roll);
     })
@@ -61,6 +60,9 @@ const SPARE = '/'
 const STRIKE_VALUE = 10
 const MAX_FRAMES_PER_GAME = 10
 
+const isLastFrame = (gameFrame) => {
+    return gameFrame.split('').length > 2
+}
 
 const gameResult = (game) => {
     const gameFrames = game.trim().split(" ")
@@ -79,6 +81,12 @@ const gameResult = (game) => {
         }
 
         if (gameFrame.includes(SPARE)) {
+            
+            if(isLastFrame(gameFrame)){
+                score += STRIKE_VALUE
+                score += normalScore(gameFrame.substr(2))
+            }
+
             lastFrame = SPARE
             return
         }

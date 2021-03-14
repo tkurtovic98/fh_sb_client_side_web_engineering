@@ -70,3 +70,22 @@ it('When given 12 X 34 X 11 11 11 11 11 11 11 11 return 51', () => {
     const result = bowling.gameResult(bowlingGame);
     expect(result).toEqual(51);
 })
+
+it('When given 12 X 34 X 11 11 11 11 11 11 11 11 return 51', () => {
+    const bowlingGame = "12 X 34 X 11 11 11 11 11 11";
+    const result = bowling.gameResult(bowlingGame);
+    expect(result).toEqual(51);
+})
+
+it('When given 12 5/ 34 5/ 11 11 11 11 11 11 11 11 return 46', () => {
+    const bowlingGame = "12 5/ 34 5/ 11 11 11 11 11 11";
+    const result = bowling.gameResult(bowlingGame);
+    expect(result).toEqual(46);
+})
+
+
+it('When given 5/ 5/ 5/ 5/ 5/ 5/ 5/ 5/ 5/ 5/ 5 return 150', () => {
+    const bowlingGame = "5/ 5/ 5/ 5/ 5/ 5/ 5/ 5/ 5/ 5/5";
+    const result = bowling.gameResult(bowlingGame);
+    expect(result).toEqual(150);
+})
