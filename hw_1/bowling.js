@@ -52,6 +52,11 @@ const gameResult = (game) => {
             }
         }
 
+        if(gameFrame.includes(SPARE)){
+            lastFrame = SPARE
+            return
+        }
+
         if (gameFrame !== STRIKE && gameFrame !== SPARE) {
             score += normalScore(gameFrame)
         }
