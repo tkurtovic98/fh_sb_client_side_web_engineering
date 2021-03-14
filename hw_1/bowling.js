@@ -1,4 +1,10 @@
 
+const STRIKE = 'X'
+const SPARE = '/'
+
+const STRIKE_VALUE = 10
+const MAX_FRAMES_PER_GAME = 10
+
 const frameResultAfterTwoRolls = () => {
     return 10
 }
@@ -60,11 +66,6 @@ const strikeScore = (gameFrames, gameFrameIndex) => {
     return score
 }
 
-const STRIKE = 'X'
-const SPARE = '/'
-
-const STRIKE_VALUE = 10
-const MAX_FRAMES_PER_GAME = 10
 
 const isLastFrame = (gameFrameIndex) => {
     return gameFrameIndex + 1 === MAX_FRAMES_PER_GAME

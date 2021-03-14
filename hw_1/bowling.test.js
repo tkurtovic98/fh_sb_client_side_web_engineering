@@ -97,6 +97,18 @@ it('When given 1- 2- 3- 4- 5- 6- X X 5/ X 5 5 return 106', () => {
     expect(result).toEqual(106);
 })
 
+it('When given 1- 2- 3- 4- 5- 6- X X 9- 4/ X return 98', () => {
+    const bowlingGame = "1- 2- 3- 4- 5- 6- X X 9- 4/ X";
+    const result = bowling.gameResult(bowlingGame);
+    expect(result).toEqual(98);
+})
+
+it('When given 5/ X X 4/ X X 9/ 3/ 1- X 6 4 return 178', () => {
+    const bowlingGame = "5/ X X 4/ X X 9/ 3/ 1- X 6 4";
+    const result = bowling.gameResult(bowlingGame);
+    expect(result).toEqual(178);
+})
+
 it('When given 5/ 5 return 15', () => {
     const gameFrames = ["5/", "5"];
     const result = bowling.spareScore(gameFrames[1] )
