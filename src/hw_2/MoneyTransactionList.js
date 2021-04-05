@@ -10,6 +10,7 @@ const MoneyTransactionList = ({moneyTransactions}) => {
                     return (
                         <li key={transaction.id}>
                             <p>amount:{transaction.amount}, paidAt:{transaction.paidAt}</p>
+                            {transaction.paidAt === null ? <button>Paid</button> : ''}
                         </li>
                     )
                 })}
