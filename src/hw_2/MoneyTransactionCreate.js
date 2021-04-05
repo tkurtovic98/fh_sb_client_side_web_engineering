@@ -32,6 +32,14 @@ const MoneyTransactionCreate = ({ users, onSubmit }) => {
                 }
                 >I owe somebody
                 </button>
+
+                <button onClick={(event) => {
+                    event.preventDefault();
+                    setSomeoneOwesMe(true);
+                }
+                }
+                >Somebody owes me
+                </button>
             </div>
 
 
