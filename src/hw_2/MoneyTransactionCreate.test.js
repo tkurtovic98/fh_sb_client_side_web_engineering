@@ -31,6 +31,34 @@ describe('<MoneyTransactionCreate>', () => {
 
     })
 
+    it('should render amount input', () => {
+        render(<MoneyTransactionCreate users={[]} onSubmit={() => { }}></MoneyTransactionCreate>)
+        expect(screen.getByLabelText(/amount/i)).toBeTruthy();
+    })
+
+    it('should call onSubmit with the right data', () => {
+        const users = [
+            { "id": 1, "name": "Sepp" },
+            { "id": 2, "name": "Mike" }
+        ]
+        const onSubmit = jest.fn()
+
+        render(<MoneyTransactionCreate users={users} onSubmit={onSubmit}></MoneyTransactionCreate>)
+
+        userEvent.selectOptions(screen.getByLabelText(/users/i), ["1"])
+        userEvent.type(screen.getByLabelText(/amount/i), "1000")
+        userEvent.click(screen.getByText(/i owe somebody/i))
+
+        userEvent.click(screen.getByText(/create/i))
+
+        expect(onSubmit).toHaveBeenCalledWith({
+            debitorId: 0,
+            creditorId: 1,
+            amount: 1000
+        })
+
+    })
+
 
 
 })

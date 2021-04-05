@@ -1,10 +1,45 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { useState, useEffect } from 'react'
 
-const MoneyTransactionCreate = ({users, onSubmit}) => {
+const MoneyTransactionCreate = ({ users, onSubmit }) => {
+    const usersEmpty = users.length === 0;
+
+    const [selectedUserId, setSelectedUserId] = useState(usersEmpty ? 0 : users[0].id)
+    const [amount, setAmount] = useState(0);
+
+    const [myId] = useState(0);
+    const [someoneOwesMe, setSomeoneOwesMe] = useState(true);
+
+
+    useEffect(() => { }, [myId])
+
     return (
-        <>  
-            <select name="users">
+        <form onSubmit={(event) => {
+            event.preventDefault()
+            onSubmit({
+                creditorId: someoneOwesMe ? myId : selectedUserId,
+                debitorId: someoneOwesMe ? selectedUserId : myId,
+                amount: amount
+            })
+        }}>
+
+            <div htmlFor="who-pays">
+                <button onClick={(event) => {
+                    event.preventDefault();
+                    setSomeoneOwesMe(false);
+                }
+                }
+                >I owe somebody
+                </button>
+            </div>
+
+
+            <label htmlFor="users">Users</label>
+            <select id="users" value={selectedUserId} onChange={(event) => {
+                event.preventDefault();
+                setSelectedUserId(parseInt(event.target.value));
+            }}>
                 {users.map((user) => {
                     return (
                         <option key={user.id} value={user.id}>
@@ -14,8 +49,17 @@ const MoneyTransactionCreate = ({users, onSubmit}) => {
                 })}
             </select>
 
-            <button onClick={onSubmit}>create</button>
-        </>
+            <label htmlFor="amount">
+                Amount
+                <input id="amount" value={amount} onChange={(event) => {
+                    event.preventDefault();
+                    setAmount(parseInt(event.target.value));
+                }}>
+                </input>
+            </label>
+
+            <button type="submit">create</button>
+        </form >
     )
 };
 
