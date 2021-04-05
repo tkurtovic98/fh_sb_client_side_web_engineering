@@ -2,7 +2,7 @@ import React from 'react'
 
 import PropTypes from 'prop-types'
 
-const MoneyTransactionList = ({moneyTransactions}) => {
+const MoneyTransactionList = ({moneyTransactions, onMoneyTransactionPaid}) => {
     return (
         <>
             <ul>
@@ -10,7 +10,7 @@ const MoneyTransactionList = ({moneyTransactions}) => {
                     return (
                         <li key={transaction.id}>
                             <p>amount:{transaction.amount}, paidAt:{transaction.paidAt}</p>
-                            {transaction.paidAt === null ? <button>Paid</button> : ''}
+                            {transaction.paidAt === null ? <button onClick={onMoneyTransactionPaid}>Paid</button> : ''}
                         </li>
                     )
                 })}
@@ -24,7 +24,8 @@ const MoneyTransactionList = ({moneyTransactions}) => {
 }
 
 MoneyTransactionList.propTypes = {
-    moneyTransactions: PropTypes.arrayOf(PropTypes.object).isRequired
+    moneyTransactions: PropTypes.arrayOf(PropTypes.object).isRequired,
+    onMoneyTransactionPaid: PropTypes.func
 }
 
 export default MoneyTransactionList
