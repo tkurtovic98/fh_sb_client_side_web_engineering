@@ -89,5 +89,32 @@ describe('<MoneyTransactionList>', () => {
 
     })
 
+    it('should remove "Paid" button when transaction gets paid', () => {
+        const moneyTransactions =
+            [
+                { "id": 1, "creditorId": 1, "debitorId": 2, "amount": 10.00, "paidAt": null },
+                { "id": 2, "creditorId": 3, "debitorId": 1, "amount": 11.20, "paidAt": "2000-01-01T00:00:00+01+00" },
+            ]
+
+        const onPaid = ({id, paidAt}) => {
+            moneyTransactions.map((transaction) => {
+                if(transaction.id === id){
+                    transaction.paidAt = paidAt;
+                }
+            })
+        };
+
+        const {rerender} = render(<MoneyTransactionList moneyTransactions={moneyTransactions} onMoneyTransactionPaid={onPaid}></MoneyTransactionList>)
+        expect(screen.getAllByRole('button', { name: /paid/i })).toHaveProperty("length", 1);
+        
+        userEvent.click(screen.getByRole('button'))
+
+        rerender(<MoneyTransactionList moneyTransactions={moneyTransactions} onMoneyTransactionPaid={onPaid}></MoneyTransactionList>)
+        
+        expect(screen.findAllByRole('button')).toHaveLength(0);
+        
+
+    })
+
 
 })
