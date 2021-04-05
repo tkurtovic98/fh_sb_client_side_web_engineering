@@ -93,6 +93,28 @@ describe('<MoneyTransactionCreate>', () => {
 
     })
 
+    it('should call onSubmit with the right data when somebody owes someone', () => {
+        const users = [
+            { "id": 1, "name": "Sepp" },
+            { "id": 2, "name": "Mike" }
+        ]
+        const onSubmit = jest.fn()
+
+        render(<MoneyTransactionCreate users={users} onSubmit={onSubmit}></MoneyTransactionCreate>)
+
+        userEvent.selectOptions(screen.getByLabelText(/users/i), ["2"])
+        userEvent.type(screen.getByLabelText(/amount/i), "20.02")
+        userEvent.click(screen.getByText(/somebody owes me/i))
+
+        userEvent.click(screen.getByText(/create/i))
+
+        expect(onSubmit).toHaveBeenCalledWith({
+            debitorId: 2,
+            creditorId: 0,
+            amount: 20.02
+        })
+    })
+
 
 
 })

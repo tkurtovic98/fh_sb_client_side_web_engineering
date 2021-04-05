@@ -6,7 +6,7 @@ const MoneyTransactionCreate = ({ users, onSubmit }) => {
     const usersEmpty = users.length === 0;
 
     const [selectedUserId, setSelectedUserId] = useState(usersEmpty ? 0 : users[0].id)
-    const [amount, setAmount] = useState(0);
+    const [amount, setAmount] = useState('');
 
     const [myId] = useState(0);
     const [someoneOwesMe, setSomeoneOwesMe] = useState(true);
@@ -20,7 +20,7 @@ const MoneyTransactionCreate = ({ users, onSubmit }) => {
             onSubmit({
                 creditorId: someoneOwesMe ? myId : selectedUserId,
                 debitorId: someoneOwesMe ? selectedUserId : myId,
-                amount: amount
+                amount: parseFloat(amount)
             })
         }}>
 
@@ -61,7 +61,7 @@ const MoneyTransactionCreate = ({ users, onSubmit }) => {
                 Amount
                 <input id="amount" value={amount} onChange={(event) => {
                     event.preventDefault();
-                    setAmount(parseInt(event.target.value));
+                    setAmount(event.target.value);
                 }}>
                 </input>
             </label>
