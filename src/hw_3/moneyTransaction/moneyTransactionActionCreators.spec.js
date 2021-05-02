@@ -107,7 +107,7 @@ describe('createMoneyTransaction action creator', () => {
 
 describe('moneyTransaction/update action creator', () => {
 
-    it('should update money transaction with given id', async () => {
+    it('should dispatch moneyTransaction/update payload', async () => {
 
         const updatePayload = { "id": 1, "paidAt": "2000-01-01T00:00:00+01+00" }
 
@@ -121,6 +121,22 @@ describe('moneyTransaction/update action creator', () => {
                 payload: updatePayload
             })
 
+    })
+
+    it('should dispatch error message', async () => {
+        const updatePayload = { "id": null, "paidAt": "2000-01-01T00:00:00+01+00" }
+
+        const dispatch = jest.fn()
+
+        const error = {msg: "MoneyTransaction update is not valid"}
+        
+        await updateMoneyTransaction()(dispatch, updatePayload)
+
+        expect(dispatch).toHaveBeenNthCalledWith(1,
+            {
+                type: 'moneyTransaction/error',
+                payload: error
+            })
     })
 
 
