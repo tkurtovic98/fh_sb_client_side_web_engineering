@@ -11,7 +11,6 @@ const MoneyTransactionCreate = ({ users, onSubmit }) => {
     const [myId] = useState(0);
     const [someoneOwesMe, setSomeoneOwesMe] = useState(true);
 
-
     useEffect(() => { }, [myId])
 
     return (

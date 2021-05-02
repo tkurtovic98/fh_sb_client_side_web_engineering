@@ -46,7 +46,7 @@ describe('createMoneyTransaction action creator', () => {
 
     it('should call dispatch with type moneyTransaction/create  and payload', async () => {
 
-        const moneyTransactionToCreate = { "id": 1, "creditorId": 4, "debitorId": 2, "amount": 15.00, "paidAt": null }
+        const moneyTransactionToCreate = { "creditorId": 4, "debitorId": 2, "amount": 15.00 }
 
         const dispatch = jest.fn()
 
@@ -58,24 +58,9 @@ describe('createMoneyTransaction action creator', () => {
         })
     })
 
-    it('should call dispatch with type moneyTransaction/failed and error message if moneyTransaction id is null', async () => {
-
-        const moneyTransactionToCreate = { "id": null, "creditorId": 4, "debitorId": 2, "amount": 15.00, "paidAt": null }
-
-        const error = { msg: "MoneyTransaction is not valid" }
-        const dispatch = jest.fn()
-
-        await createMoneyTransaction()(dispatch, moneyTransactionToCreate)
-
-        expect(dispatch).toHaveBeenNthCalledWith(1, {
-            type: 'moneyTransaction/error',
-            payload: error
-        })
-    })
-
     it('should call dispatch with type moneyTransaction/failed and error message if moneyTransaction creditorId is null', async () => {
 
-        const moneyTransactionToCreate = { "id": 1, "creditorId": null, "debitorId": 2, "amount": 15.00, "paidAt": null }
+        const moneyTransactionToCreate = { "creditorId": null, "debitorId": 2, "amount": 15.00 }
 
         const error = { msg: "MoneyTransaction is not valid" }
         const dispatch = jest.fn()
@@ -91,7 +76,7 @@ describe('createMoneyTransaction action creator', () => {
 
     it('should call dispatch with type moneyTransaction/failed and error message if moneyTransaction debitorId is null', async () => {
 
-        const moneyTransactionToCreate = { "id": 1, "creditorId": 2, "debitorId": null, "amount": 15.00, "paidAt": null }
+        const moneyTransactionToCreate = { "creditorId": 2, "debitorId": null, "amount": 15.00 }
 
         const error = { msg: "MoneyTransaction is not valid" }
         const dispatch = jest.fn()

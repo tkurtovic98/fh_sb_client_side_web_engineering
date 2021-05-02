@@ -5,8 +5,8 @@ import userReducer from '../user/userSlice'
 
 
 const rootReducer = combineReducers({
-  moneyTransaction: moneyTransactionReducer,
-  user: userReducer
+  moneyTransactions: moneyTransactionReducer,
+  users: userReducer
 })
 
 export default rootReducer

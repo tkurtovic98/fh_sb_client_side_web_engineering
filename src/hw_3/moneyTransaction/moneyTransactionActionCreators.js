@@ -29,23 +29,11 @@ const isNotNullAndIsFloatOrInt = (val) => {
     return val !== null && (isFloat(val) || isInt(val))
 }
 
-const isIsoDate = (str) => {
-    if (!/\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.\d{3}Z/.test(str)) return false;
-    var d = new Date(str);
-    return d.toISOString() === str;
-}
-
-const isNullOrDateTime = (val) => {
-    return val === null || isIsoDate(val)
-}
-
 const isValid = (moneyTransaction) => {
 
-    return isNotNullAndIsInt(moneyTransaction.id) &&
-        isNotNullAndIsInt(moneyTransaction.creditorId) &&
+    return isNotNullAndIsInt(moneyTransaction.creditorId) &&
         isNotNullAndIsInt(moneyTransaction.debitorId) &&
-        isNotNullAndIsFloatOrInt(moneyTransaction.amount) &&
-        isNullOrDateTime(moneyTransaction.paidAt)
+        isNotNullAndIsFloatOrInt(moneyTransaction.amount)
 
 }
 

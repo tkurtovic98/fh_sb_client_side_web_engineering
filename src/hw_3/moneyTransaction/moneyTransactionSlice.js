@@ -4,6 +4,11 @@ const initialState = [
 
 ]
 
+function nextMoneyTransactionId(moneyTransactions) {
+    const maxId = moneyTransactions.reduce((maxId, moneyTx) => Math.max(moneyTx.id, maxId), -1)
+    return maxId + 1
+}
+
 const moneyTransactionReducer = (state = initialState, action) => {
     switch (action.type) {
         case MoneyTransactionActions.fetch: {
@@ -14,7 +19,7 @@ const moneyTransactionReducer = (state = initialState, action) => {
             ]
         }
         case MoneyTransactionActions.create: {
-            const newMoneyTransaction = action.payload
+            const newMoneyTransaction = {...action.payload, id:nextMoneyTransactionId(state), paidAt: null }
             return [
                 ...state,
                 newMoneyTransaction
